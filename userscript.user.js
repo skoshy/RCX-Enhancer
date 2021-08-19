@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        RCX Enhancer
 // @namespace   Violentmonkey Scripts
-// @match       http://192.168.10.241:8080/*
-// @match       http://localhost:8080/*
+// @match       http*://*.*.*.*:8080/*
+// @match       http*://localhost:8080/*
 // @version     0.1.0
 // @author      -
 // @description 8/19/2021, 12:50:40 AM
 // @grant       GM_addStyle
+// @downloadURL https://github.com/skoshy/RCX-Enhancer/raw/main/userscript.user.js
 // ==/UserScript==
 
 const scriptName = 'rcx-enhancer';
