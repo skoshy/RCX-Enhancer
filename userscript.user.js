@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       http*://*.*.*.*:8080/*
 // @match       http*://localhost:8080/*
-// @version     0.2.0
+// @version     0.3.0
 // @author      -
 // @description 8/19/2021, 12:50:40 AM
 // @grant       GM_addStyle
@@ -51,6 +51,10 @@ const main = () => {
     }
 
     @media (max-width:801px)  {
+        .listing tbody {
+          display: grid;
+          grid-template-columns: 50vw 50vw;
+        }
         .file {
           height: auto;
         }
@@ -62,7 +66,7 @@ const main = () => {
       
         .${scriptName}-thumb {
           max-height: 100vh;
-          width: 100vw;
+          width: 100%;
         }
       
       
@@ -118,10 +122,15 @@ const main = () => {
     }
 
     // add the thumb to the matching video
+    const imgLinkContainer = document.createElement('a');
+    imgLinkContainer.href = matchingVideoRow.querySelector('a').href;
+    imgLinkContainer.target = '_blank';
     let img = document.createElement('img');
     img.src = link;
     img.className = `${scriptName}-thumb`;
-    matchingVideoRow.querySelector('td:nth-child(2)').prepend(img);
+    imgLinkContainer.append(img);
+    
+    matchingVideoRow.querySelector('td:nth-child(2)').prepend(imgLinkContainer);
     matchingVideoRow.querySelector('svg').remove();
 
     row.remove();
