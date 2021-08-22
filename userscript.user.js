@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       http*://*.*.*.*:8080/*
 // @match       http*://localhost:8080/*
-// @version     0.4.0
+// @version     0.4.1
 // @author      -
 // @description 8/19/2021, 12:50:40 AM
 // @grant       GM_addStyle
@@ -11,6 +11,12 @@
 // ==/UserScript==
 
 const scriptName = 'rcx-enhancer';
+
+const formats = {
+  image: ['.jpg', '.jpeg', '.png', '.webp', '.bmp', '.tiff'],
+  video: ['.mp4', '.mkv', '.mov', '.m4v', '.flv', '.avi', '.mpeg', '.mpg'],
+  text: ['.txt', '.md', '.nfo'],
+}
 
 const createElement = (type, attributes = {}, options = {}) => {
   const el = document.createElement(type);
@@ -81,15 +87,15 @@ const parseFileName = (name) => {
 };
 
 const parseFileType = (name) => {
-  if (['.jpg', '.png', '.webp', '.bmp', '.tiff'].some(ext => name.endsWith(ext))) {
+  if (formats.image.some(ext => name.endsWith(ext))) {
     return 'image';
   }
   
-  if (['.mp4', '.mkv', '.mov', '.m4v', '.flv', '.avi', '.mpeg', '.mpg'].some(ext => name.endsWith(ext))) {
+  if (formats.video.some(ext => name.endsWith(ext))) {
     return 'video';
   }
   
-  if (['.txt', '.md', '.nfo'].some(ext => name.endsWith(ext))) {
+  if (formats.text.some(ext => name.endsWith(ext))) {
     return 'text';
   }
   
@@ -144,6 +150,8 @@ const getPreferredVideo = (videos) => {
   let preferredVideo = videos[0];
   
   videos.forEach(video => {
+    if (!video.name.endsWith('.mp4')) return;
+    
     if (preferredVideoSizes[video.fileAttributes?.q] ?? Infinity >= preferredVideoSizes[preferredVideo.fileAttributes?.q] ?? Infinity) return;
     
     preferredVideo = video;
