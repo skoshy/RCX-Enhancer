@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       http*://*.*.*.*:8080/*
 // @match       http*://localhost:8080/*
-// @version     0.4.1
+// @version     0.5.0
 // @author      -
 // @description 8/19/2021, 12:50:40 AM
 // @grant       GM_addStyle
@@ -153,6 +153,8 @@ const getPreferredVideo = (videos) => {
     if (!video.name.endsWith('.mp4')) return;
     
     if (preferredVideoSizes[video.fileAttributes?.q] ?? Infinity >= preferredVideoSizes[preferredVideo.fileAttributes?.q] ?? Infinity) return;
+    
+    if (video.fileAttributes?.priority?.startsWith('low')) return;
     
     preferredVideo = video;
   });
