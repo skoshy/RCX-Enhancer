@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       http*://*.*.*.*:8080/*
 // @match       http*://localhost:8080/*
-// @version     0.5.0
+// @version     0.5.1
 // @author      -
 // @description 8/19/2021, 12:50:40 AM
 // @grant       GM_addStyle
@@ -163,7 +163,9 @@ const getPreferredVideo = (videos) => {
 };
 
 const getPreferredImage = (images) => {
-  let preferredImage = images[0];
+  if (!images || images.length === 0) return { href: 'https://via.placeholder.com/160x90' };
+  
+  let preferredImage = images?.[0];
   
   images.forEach(image => {
     if (image.fileAttributes?.t === 'set') return;
